@@ -66,9 +66,19 @@ async function run() {
         res
         .cookie('token', token, {
             httpOnly: true,
-            secure: false,
+            secure: true,
+            sameSite: 'none'
         })
         .send({success: true});
+    })
+
+    app.post('/logout', async(req, res) => {
+        const user = req.body;
+        console.log('logout', user);
+        res
+        .clearCookie('token', {maxAge: 0})
+        .send({success: true});
+
     })
 
     // services related api
